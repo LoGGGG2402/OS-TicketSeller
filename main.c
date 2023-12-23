@@ -3,12 +3,13 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define PORT 9000
 #define BUFFER_SIZE 1024
 
 int main() {
-    int sock = 0, valread;
+    int sock = 0;
     struct sockaddr_in serv_addr;
     char buffer[1024] = {0};
 
@@ -33,20 +34,24 @@ int main() {
     }
 
     // read the message from server and print it
-    valread = read(sock, buffer, 1024);
+    read(sock, buffer, 1024);
     printf("%s\n", buffer);
 
     // get id from user
     char id[1024];
     printf("Enter your id: ");
-    scanf("%s", id);
+    scanf("%[^\n]%*c", id);
+    fflush(stdin);
+
     printf("Your id is %s\n", id);
 
     while (1) {
         // take request from user
         char request[1024];
         printf("Enter your request: ");
-        scanf("%s", request);
+        scanf("%[^\n]%*c", request);
+        fflush(stdin);
+        printf("Your request is %s\n", request);
 
 
 
@@ -57,38 +62,7 @@ int main() {
         }
 
         // If request is "handle_ticket" then send the request to server
-        if (strcmp(request, "buy_ticket") == 0) {
-            // remove extra spaces from request
-            char *token = strtok(request, " ");
-            char request_without_spaces[1024] = {0};
-
-            while (token != NULL) {
-                strcat(request_without_spaces, token);
-                token = strtok(NULL, " ");
-                if (token != NULL) {
-                    strcat(request_without_spaces, " ");
-                }
-            }
-
-            // add prefix "handle_ticket" to the request
-            char request_with_prefix[1024];
-            strcpy(request_with_prefix, "handle_ticket ");
-
-            // add request to the prefix
-            strcat(request_with_prefix, request_without_spaces);
-
-            // add id to the request
-            strcat(request_with_prefix, " ");
-            strcat(request_with_prefix, id);
-
-// send the request to server
-            send(sock, request_with_prefix, strlen(request_with_prefix), 0);
-
-// read the message from server and print it
-            valread = read(sock, buffer, 1024);
-            printf("%s\n", buffer);
-
-        } else if (strcmp(request, "return_ticket") == 0) {
+        if (strncmp(request, "buy_ticket", 10) == 0) {
             // add prefix "handle_ticket" to the request
             char request_with_prefix[1024];
             strcpy(request_with_prefix, "handle_ticket ");
@@ -104,7 +78,28 @@ int main() {
             send(sock, request_with_prefix, strlen(request_with_prefix), 0);
 
             // read the message from server and print it
-            valread = read(sock, buffer, 1024);
+            read(sock, buffer, 1024);
+            printf("%s\n", buffer);
+
+
+
+        } else if (strncmp(request, "return_ticket", 13) == 0) {
+            // add prefix "handle_ticket" to the request
+            char request_with_prefix[1024];
+            strcpy(request_with_prefix, "handle_ticket ");
+
+            // add request to the prefix
+            strcat(request_with_prefix, request);
+
+            // add id to the request
+            strcat(request_with_prefix, " ");
+            strcat(request_with_prefix, id);
+
+            // send the request to server
+            send(sock, request_with_prefix, strlen(request_with_prefix), 0);
+
+            // read the message from server and print it
+            read(sock, buffer, 1024);
             printf("%s\n", buffer);
         } else if (strcmp(request, "get_ticket_status") == 0) {
             // add prefix "handle_ticket" to the request
@@ -118,7 +113,7 @@ int main() {
             send(sock, request_with_prefix, strlen(request_with_prefix), 0);
 
             // read the message from server and print it
-            valread = read(sock, buffer, 1024);
+            read(sock, buffer, 1024);
             printf("%s\n", buffer);
         } else {
             printf("Invalid request\n");
