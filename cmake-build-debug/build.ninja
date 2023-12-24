@@ -49,14 +49,14 @@ cmake_ninja_workdir = /Users/phanlong/CLionProjects/Client/cmake-build-debug/
 
 build cmake_object_order_depends_target_Client: phony || CMakeFiles/Client.dir
 
-build CMakeFiles/Client.dir/main.c.o: C_COMPILER__Client_unscanned_Debug /Users/phanlong/CLionProjects/Client/main.c || cmake_object_order_depends_target_Client
-  DEP_FILE = CMakeFiles/Client.dir/main.c.o.d
+build CMakeFiles/Client.dir/client.c.o: C_COMPILER__Client_unscanned_Debug /Users/phanlong/CLionProjects/Client/client.c || cmake_object_order_depends_target_Client
+  DEP_FILE = CMakeFiles/Client.dir/client.c.o.d
   FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/Client.dir
   OBJECT_FILE_DIR = CMakeFiles/Client.dir
 
-build CMakeFiles/Client.dir/test.c.o: C_COMPILER__Client_unscanned_Debug /Users/phanlong/CLionProjects/Client/test.c || cmake_object_order_depends_target_Client
-  DEP_FILE = CMakeFiles/Client.dir/test.c.o.d
+build CMakeFiles/Client.dir/server.c.o: C_COMPILER__Client_unscanned_Debug /Users/phanlong/CLionProjects/Client/server.c || cmake_object_order_depends_target_Client
+  DEP_FILE = CMakeFiles/Client.dir/server.c.o.d
   FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -fcolor-diagnostics
   OBJECT_DIR = CMakeFiles/Client.dir
   OBJECT_FILE_DIR = CMakeFiles/Client.dir
@@ -69,7 +69,7 @@ build CMakeFiles/Client.dir/test.c.o: C_COMPILER__Client_unscanned_Debug /Users/
 #############################################
 # Link the executable Client
 
-build Client: C_EXECUTABLE_LINKER__Client_Debug CMakeFiles/Client.dir/main.c.o CMakeFiles/Client.dir/test.c.o
+build Client: C_EXECUTABLE_LINKER__Client_Debug CMakeFiles/Client.dir/client.c.o CMakeFiles/Client.dir/server.c.o
   FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6
   OBJECT_DIR = CMakeFiles/Client.dir
   POST_BUILD = :
